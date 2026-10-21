@@ -1,0 +1,4 @@
+# Якщо Base directory у Netlify не вказано, публікуємо сайт бота з папки bot
+[build]
+  publish = "bot"
+  command = ""
