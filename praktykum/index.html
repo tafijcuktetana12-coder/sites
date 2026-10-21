@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Практикум з монтажу</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Живий практикум з монтажу Тетяни Тафійчук: 2 тижні практики в групі, CapCut, Edits, Picsart і нейромережі для відео. Старт 25 жовтня">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Onest:wght@400;500;700&family=Playfair+Display:ital,wght@1,600;1,800&display=swap">
+<style>
+html,body{margin:0}img{max-width:100%}
+/* Лейаут: редакційна сторінка-журнал. Великі заголовки Unbounded, підпис курсивом як «рука» Тетяни, справжні роботи бота як ілюстрації */
+:root {
+  --paper: #F7F3F1;
+  --ink: #161214;
+  --red: #D81F3C;
+  --soft: #EEE5E2;
+  --muted: #6F6367;
+  --card: #FFFFFF;
+  --line: #E2D8D5;
+  --on-red: #FFFFFF;
+  --f-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --f-body: "Onest", "Segoe UI", system-ui, sans-serif;
+  --f-hand: "Playfair Display", Georgia, serif;
+  --r: 22px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #131012; --ink: #F5EFEE; --red: #FF4762; --soft: #1F1A1C; --muted: #B4A7AB; --card: #1B1618; --line: #342B2E; --on-red: #FFFFFF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #131012; --ink: #F5EFEE; --red: #FF4762; --soft: #1F1A1C; --muted: #B4A7AB; --card: #1B1618; --line: #342B2E; --on-red: #FFFFFF;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.55; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+section { padding-block: clamp(48px, 8vw, 96px); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.08; }
+h1 { font-size: clamp(34px, 6.2vw, 68px); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: clamp(28px, 4.4vw, 46px); font-weight: 800; }
+h3 { font-size: 20px; font-weight: 600; line-height: 1.25; }
+p { margin: 0; }
+.hand { font-family: var(--f-hand); font-style: italic; font-weight: 600; color: var(--red); }
+.eyebrow { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.btn { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 17px; border-radius: 999px; padding: 16px 26px; transition: transform .15s ease, box-shadow .15s ease; }
+.btn-red { background: var(--red); color: var(--on-red); box-shadow: 0 10px 26px -12px var(--red); }
+.btn-ghost { color: var(--ink); border: 2px solid var(--ink); }
+.btn:hover { transform: translateY(-2px); }
+.btn:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+.tg { width: 20px; height: 20px; flex: none; }
+
+/* верхня смужка */
+.topbar { background: var(--red); color: var(--on-red); text-align: center; font-weight: 600; font-size: 15px; padding-block: 10px; }
+.topbar b { font-weight: 800; }
+
+/* hero */
+.hero { padding-block: clamp(36px, 6vw, 72px) clamp(40px, 7vw, 88px); }
+.hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.hero-text { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.hero-text .lead { font-size: clamp(18px, 2vw, 21px); color: var(--muted); max-width: 34em; }
+.hero-text h1 .hand { font-size: 0.82em; display: block; margin-top: 8px; font-weight: 800; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.small { font-size: 14px; color: var(--muted); }
+.hero-pic { position: relative; min-width: 0; }
+.hero-pic img.me { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center 22%; border-radius: var(--r); display: block; }
+.bubble { position: absolute; background: var(--card); color: var(--ink); border-radius: 18px; padding: 12px 16px; font-size: 14px; line-height: 1.35; box-shadow: 0 18px 40px -18px rgba(0,0,0,.45); max-width: 230px; border: 1px solid var(--line); }
+.bubble b { display: block; font-size: 15px; }
+.bubble.b1 { left: -18px; top: 12%; }
+.bubble.b2 { right: -14px; bottom: 14%; }
+.bubble .tag { display: inline-block; background: var(--red); color: var(--on-red); border-radius: 8px; padding: 1px 7px; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+
+/* що вміє */
+.head { display: flex; flex-direction: column; gap: 12px; max-width: 46rem; margin-bottom: clamp(28px, 4vw, 48px); }
+.head p { color: var(--muted); font-size: 18px; }
+.feature { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(22px, 4vw, 56px); align-items: center; padding-block: clamp(26px, 4vw, 44px); border-top: 1px solid var(--line); }
+.feature:last-child { border-bottom: 1px solid var(--line); }
+.feature .txt { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.feature .txt p { color: var(--muted); }
+.feature ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.feature li { padding-left: 26px; position: relative; }
+.feature li::before { content: ""; position: absolute; left: 0; top: .55em; width: 12px; height: 12px; border-radius: 50%; background: var(--red); }
+.feature .kicker { font-family: var(--f-display); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--red); }
+.media { min-width: 0; }
+.strip { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+.strip img { width: 46%; min-width: 190px; aspect-ratio: 4/5; object-fit: cover; border-radius: 16px; scroll-snap-align: start; flex: none; }
+.media img.one, .media video { width: 100%; border-radius: 18px; display: block; background: var(--soft); }
+.vid-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.vid-pair video { aspect-ratio: 9/16; object-fit: cover; }
+.media .cap { font-size: 13px; color: var(--muted); margin-top: 8px; }
+.feature.flip .media { order: -1; }
+
+/* як це працює */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: s; }
+.step { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 26px; display: flex; flex-direction: column; gap: 10px; }
+.step .n { font-family: var(--f-display); font-weight: 800; font-size: 40px; color: var(--red); line-height: 1; }
+.step p { color: var(--muted); }
+
+/* відгуки */
+.reviews { background: var(--soft); }
+.quotes { columns: 3 260px; column-gap: 18px; }
+.q { break-inside: avoid; background: var(--card); border-radius: 18px; padding: 20px 22px; margin-bottom: 18px; border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+.q p { font-size: 17px; }
+.q .who { font-size: 14px; color: var(--muted); font-weight: 700; }
+.q.big p { font-family: var(--f-hand); font-style: italic; font-size: 24px; line-height: 1.3; }
+
+/* безкоштовне */
+.freegrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.fr { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.fr b { font-size: 17px; }
+.fr span { font-size: 14px; color: var(--muted); }
+
+/* тарифи */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.plan { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 26px; display: flex; flex-direction: column; gap: 14px; }
+.plan.hot { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.plan.hot .muted, .plan.hot li { color: color-mix(in srgb, var(--paper) 78%, transparent); }
+.plan .price { font-family: var(--f-display); font-weight: 800; font-size: 40px; line-height: 1; font-variant-numeric: tabular-nums; }
+.plan .price small { font-family: var(--f-body); font-size: 15px; font-weight: 500; margin-left: 4px; }
+.plan .muted { color: var(--muted); font-size: 15px; }
+.plan ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+.plan .btn { margin-top: auto; justify-content: center; }
+.plan.hot .btn-red { box-shadow: none; }
+.badge { align-self: flex-start; background: var(--red); color: var(--on-red); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; border-radius: 8px; padding: 4px 9px; }
+.more-plans { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.mini { border: 1px dashed var(--line); border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; }
+.mini b { font-family: var(--f-display); font-size: 22px; font-variant-numeric: tabular-nums; }
+.gift { margin-top: 26px; background: var(--red); color: var(--on-red); border-radius: var(--r); padding: 22px 26px; display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; justify-content: space-between; }
+.gift p { font-size: 18px; max-width: 46rem; }
+.gift .btn { background: var(--on-red); color: var(--red); }
+
+/* faq */
+.faq { display: grid; gap: 10px; max-width: 52rem; }
+details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 22px; }
+summary { cursor: pointer; font-weight: 700; font-size: 18px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-family: var(--f-display); color: var(--red); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { margin-top: 10px; color: var(--muted); }
+
+/* фінал */
+.final { text-align: left; }
+.final-box { background: var(--ink); color: var(--paper); border-radius: 28px; padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 28px; align-items: center; }
+.final-box h2 .hand { color: var(--red); }
+.final-box p { color: color-mix(in srgb, var(--paper) 75%, transparent); margin-top: 14px; font-size: 18px; }
+.final-box .cta-row { justify-content: flex-start; }
+.final-box .btn-ghost { color: var(--paper); border-color: var(--paper); }
+.contact { font-size: 15px; margin-top: 10px; color: color-mix(in srgb, var(--paper) 70%, transparent); }
+.contact a { color: var(--paper); font-weight: 700; }
+footer { padding-block: 28px 40px; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 860px) {
+  .hero-grid, .feature, .final-box { grid-template-columns: 1fr; }
+  .feature.flip .media { order: 0; }
+  .steps, .plans, .more-plans { grid-template-columns: 1fr; }
+  .bubble.b1 { left: 10px; top: 10px; }
+  .bubble.b2 { right: 10px; bottom: 10px; }
+  .hero-pic { max-width: 460px; }
+}
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+
+/* практикум */
+.hero-dark { background: #141113; color: #F5EFEE; }
+.hero-dark .hero-text .lead { color: #CDBFC2; }
+.hero-dark .eyebrow, .hero-dark .small { color: #B4A7AB; }
+.hero-dark .btn-ghost { color: #F5EFEE; border-color: #F5EFEE; }
+.hero-dark .hero-text h1 .hand { color: #FF4762; }
+.date { display: inline-flex; gap: 10px; flex-wrap: wrap; }
+.date span { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 14px; }
+.outcomes { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.oc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.oc b { font-family: var(--f-display); font-size: 17px; font-weight: 600; line-height: 1.25; }
+.oc span { color: var(--muted); font-size: 15px; }
+.prog { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.pg { border-radius: 18px; padding: 22px; background: var(--ink); color: var(--paper); display: flex; flex-direction: column; gap: 6px; }
+.pg .num { font-family: var(--f-display); font-weight: 800; font-size: 46px; line-height: 1; color: var(--red); font-variant-numeric: tabular-nums; }
+.pg span { color: color-mix(in srgb, var(--paper) 75%, transparent); font-size: 15px; }
+.days { display: grid; gap: 10px; max-width: 46rem; padding: 0; margin: 0; list-style: none; counter-reset: d; }
+.days li { counter-increment: d; display: grid; grid-template-columns: 52px 1fr; gap: 14px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 18px; }
+.days li::before { content: counter(d); font-family: var(--f-display); font-weight: 800; font-size: 26px; color: var(--red); text-align: center; }
+.tiers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.tier { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 4px; }
+.tier:first-child { background: var(--red); color: var(--on-red); border-color: var(--red); }
+.tier:first-child .small { color: color-mix(in srgb, var(--on-red) 85%, transparent); }
+.tier b { font-family: var(--f-display); font-size: 34px; font-variant-numeric: tabular-nums; }
+.bonus { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 860px) { .prog, .tiers { grid-template-columns: 1fr 1fr; } .bonus { grid-template-columns: 1fr; } }
+@media (max-width: 460px) { .prog, .tiers { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+
+<div class="topbar"><div class="wrap">Старт <b>25 жовтня</b> · запис до 25 жовтня включно · місця за поточною ціною закінчуються</div></div>
+
+<header class="hero hero-dark">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <span class="eyebrow">Щорічний живий практикум Тетяни Тафійчук</span>
+      <h1>Живий практикум з монтажу <span class="hand">одразу з практики, без лекцій</span></h1>
+      <p class="lead">2 тижні в групі. З першого дня ви робите свої відео, а не дивитесь чужі: мультики, анімовані рекламні ролики, аватар з вашим голосом, святкові ролики і купа Reels з вами.</p>
+      <div class="date"><span>25 жовтня старт</span><span>2 тижні</span><span>завдання по 15-30 хв</span></div>
+      <div class="cta-row">
+        <a class="btn btn-red" href="https://t.me/content_tatiana_bot?start=mont" target="_blank" rel="noopener">Забронювати місце</a>
+        <a class="btn btn-ghost" href="#price">Ціни і місця</a>
+      </div>
+      <p class="small">Ціна росте з кожною групою місць. Хто швидший, той платить менше</p>
+    </div>
+    <div class="hero-pic">
+      <img class="me" src="capcut.jpg" alt="Тетяна Тафійчук">
+      <div class="bubble b2"><span class="tag">день 1</span><b>Перший Reels з вашого запису</b>монтуємо разом у групі</div>
+    </div>
+  </div>
+</header>
+
+<section id="result">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Результат</span>
+      <h2>Що буде у вас <span class="hand">через 2 тижні</span></h2>
+      <p>І найголовніше: ви вмітимете зробити все це знову самі, без дизайнера і монтажера</p>
+    </div>
+    <div class="outcomes">
+      <div class="oc"><b>Пачка Reels з вами</b><span>у різних форматах, з одного запису готовий ролик</span></div>
+      <div class="oc"><b>Відео-мультик</b><span>про вашу послугу, без навичок малювання</span></div>
+      <div class="oc"><b>Аватар з вашим голосом</b><span>ваш цифровий двійник, який говорить за вас</span></div>
+      <div class="oc"><b>Анімований рекламний ролик</b><span>з графікою, озвучкою і музикою під вашу нішу</span></div>
+      <div class="oc"><b>Ролик до Хелловіну</b><span>з вашим продуктом чи послугою, встигнете до свята</span></div>
+      <div class="oc"><b>Каруселі, що оживають</b><span>заголовок, фраза, картка з'являються по черзі</span></div>
+      <div class="oc"><b>Повтори світових трендів</b><span>склейка і музика за 15 хвилин</span></div>
+      <div class="oc"><b>Фото і відео з нейромереж</b><span>промти для реалістичних фотосесій без фотографа</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="program" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Програма</span>
+      <h2>Що всередині</h2>
+      <p>Склеювати, монтувати, покращувати звук, накладати ефекти й музику і робити відео «дорогим»</p>
+    </div>
+    <div class="prog">
+      <div class="pg"><span class="num">10</span><b>уроків по CapCut</b><span>від першої склейки до роликів, які не соромно викласти</span></div>
+      <div class="pg"><span class="num">5</span><b>уроків по Edits</b><span>застосунок Instagram для Reels</span></div>
+      <div class="pg"><span class="num">5</span><b>уроків по Picsart</b><span>фото, графіка, анімація</span></div>
+      <div class="pg"><span class="num">AI</span><b>нейромережі</b><span>для відео і фото: мультики, аватар, фотосесії</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="ai" style="padding-top:0">
+  <div class="wrap">
+    <div class="feature">
+      <div class="txt">
+        <span class="kicker">Нейромережі для відео</span>
+        <h3>Те, на що раніше йшли години, тепер займає секунди</h3>
+        <p>Раніше анімований ролик збирали вручну, вирізаючи кожен елемент. Тепер нейромережі роблять це за лічені секунди, а ви вчитесь керувати результатом. Ці 2 ролики зроблені з одного мого фото.</p>
+      </div>
+      <div class="media">
+        <div class="vid-pair">
+          <video src="kino.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Відео з одного фото"></video>
+          <video src="swipe.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Зміна образу"></video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="format" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Як це буде</span>
+      <h2>Перші дні <span class="hand">по кроках</span></h2>
+    </div>
+    <ol class="days">
+      <li>Знайомимось і встановлюємо CapCut, якщо його ще немає. Він працює в Україні і без VPN</li>
+      <li>Монтуємо перший Reels з вашого запису</li>
+      <li>Робимо відео-мультик про вашу послугу</li>
+      <li>Оживляємо аватар з вашим голосом</li>
+      <li>Збираємо святковий ролик до Хелловіну</li>
+    </ol>
+    <div class="steps" style="margin-top:22px">
+      <div class="step"><h3>Маленькі завдання</h3><p>кожне на 15-30 хвилин, без вечорів за монтажем</p></div>
+      <div class="step"><h3>Я поруч у групі</h3><p>підказую, якщо щось не виходить, розбираю ваші відео</p></div>
+      <div class="step"><h3>Уроки лишаються з вами</h3><p>переглядаєте, коли зручно, і повторюєте самі</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="bonus" class="reviews">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Бонуси учасникам</span>
+      <h2>Подарунки <span class="hand">кожному</span></h2>
+    </div>
+    <div class="bonus">
+      <div class="q"><p><b>База промтів для фотосесій для блогу</b></p><span class="who">реалістичні фото без фотографа, одразу після оплати</span></div>
+      <div class="q"><p><b>База «секретних команд» для фото</b></p><span class="who">фешн-кадри з одного фото, різні ракурси і образи</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="price">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Ціни і місця</span>
+      <h2>Ціна залежить від того, <span class="hand">наскільки швидко ви вирішите</span></h2>
+      <p>Коли місця за поточною ціною закінчуються, ціна росте. Актуальну ціну і скільки місць за нею лишилось, бот покаже після кнопки</p>
+    </div>
+    <div class="gift">
+      <p>Дізнайтесь свою ціну в боті. Після оплати він одразу надсилає вхід у закриту групу практикуму і бонуси. Старт <b>25 жовтня</b></p>
+      <a class="btn" href="https://t.me/content_tatiana_bot?start=mont" target="_blank" rel="noopener">Дізнатися ціну</a>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Питання</span><h2>Часті питання</h2></div>
+    <div class="faq">
+      <details><summary>Я ніколи не монтувала. Впораюсь?</summary><p>Так. Практикум побудований саме для новачків: з першого дня ви робите своє відео разом з групою, а завдання маленькі, на 15-30 хвилин.</p></details>
+      <details><summary>CapCut працює в Україні?</summary><p>Працює, і без VPN. Якщо програми ще немає, встановимо разом на першому занятті.</p></details>
+      <details><summary>Потрібен комп'ютер?</summary><p>Ні, усе можна робити з телефона.</p></details>
+      <details><summary>А якщо я не встигну щось у ці 2 тижні?</summary><p>Уроки лишаються з вами, переглядаєте і повторюєте, коли зручно.</p></details>
+      <details><summary>Як потрапити в групу?</summary><p>Після оплати в боті вхід приходить автоматично, посилання особисте і спрацює один раз.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" style="padding-top:0">
+  <div class="wrap">
+    <div class="final-box">
+      <div>
+        <h2>Відео, які <span class="hand">не соромно виставити</span></h2>
+        <p>За 2 тижні у вас будуть готові відео на місяць контенту і вміння робити нові самостійно.</p>
+        <p class="contact">Питання: <a href="https://t.me/Tatian_light" target="_blank" rel="noopener">@Tatian_light</a></p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-red" href="https://t.me/content_tatiana_bot?start=mont" target="_blank" rel="noopener">Забронювати місце</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">© Тетяна Тафійчук · живий практикум з монтажу</div></footer>
+
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI-агенти для контенту</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Telegram-бот Тетяни Тафійчук: каруселі під ключ, монтаж відео з ефектами, відео з одного фото і контент-план. Пишете нішу, отримуєте готовий контент">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Onest:wght@400;500;700&family=Playfair+Display:ital,wght@1,600;1,800&display=swap">
+<style>
+html,body{margin:0}img{max-width:100%}
+/* Лейаут: редакційна сторінка-журнал. Великі заголовки Unbounded, підпис курсивом як «рука» Тетяни, справжні роботи бота як ілюстрації */
+:root {
+  --paper: #F7F3F1;
+  --ink: #161214;
+  --red: #D81F3C;
+  --soft: #EEE5E2;
+  --muted: #6F6367;
+  --card: #FFFFFF;
+  --line: #E2D8D5;
+  --on-red: #FFFFFF;
+  --f-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --f-body: "Onest", "Segoe UI", system-ui, sans-serif;
+  --f-hand: "Playfair Display", Georgia, serif;
+  --r: 22px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #131012; --ink: #F5EFEE; --red: #FF4762; --soft: #1F1A1C; --muted: #B4A7AB; --card: #1B1618; --line: #342B2E; --on-red: #FFFFFF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #131012; --ink: #F5EFEE; --red: #FF4762; --soft: #1F1A1C; --muted: #B4A7AB; --card: #1B1618; --line: #342B2E; --on-red: #FFFFFF;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.55; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+section { padding-block: clamp(48px, 8vw, 96px); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.08; }
+h1 { font-size: clamp(34px, 6.2vw, 68px); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: clamp(28px, 4.4vw, 46px); font-weight: 800; }
+h3 { font-size: 20px; font-weight: 600; line-height: 1.25; }
+p { margin: 0; }
+.hand { font-family: var(--f-hand); font-style: italic; font-weight: 600; color: var(--red); }
+.eyebrow { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.btn { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 17px; border-radius: 999px; padding: 16px 26px; transition: transform .15s ease, box-shadow .15s ease; }
+.btn-red { background: var(--red); color: var(--on-red); box-shadow: 0 10px 26px -12px var(--red); }
+.btn-ghost { color: var(--ink); border: 2px solid var(--ink); }
+.btn:hover { transform: translateY(-2px); }
+.btn:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+.tg { width: 20px; height: 20px; flex: none; }
+
+/* верхня смужка */
+.topbar { background: var(--red); color: var(--on-red); text-align: center; font-weight: 600; font-size: 15px; padding-block: 10px; }
+.topbar b { font-weight: 800; }
+
+/* hero */
+.hero { padding-block: clamp(36px, 6vw, 72px) clamp(40px, 7vw, 88px); }
+.hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.hero-text { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.hero-text .lead { font-size: clamp(18px, 2vw, 21px); color: var(--muted); max-width: 34em; }
+.hero-text h1 .hand { font-size: 0.82em; display: block; margin-top: 8px; font-weight: 800; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.small { font-size: 14px; color: var(--muted); }
+.hero-pic { position: relative; min-width: 0; }
+.hero-pic img.me { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center 22%; border-radius: var(--r); display: block; }
+.bubble { position: absolute; background: var(--card); color: var(--ink); border-radius: 18px; padding: 12px 16px; font-size: 14px; line-height: 1.35; box-shadow: 0 18px 40px -18px rgba(0,0,0,.45); max-width: 230px; border: 1px solid var(--line); }
+.bubble b { display: block; font-size: 15px; }
+.bubble.b1 { left: -18px; top: 12%; }
+.bubble.b2 { right: -14px; bottom: 14%; }
+.bubble .tag { display: inline-block; background: var(--red); color: var(--on-red); border-radius: 8px; padding: 1px 7px; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+
+/* що вміє */
+.head { display: flex; flex-direction: column; gap: 12px; max-width: 46rem; margin-bottom: clamp(28px, 4vw, 48px); }
+.head p { color: var(--muted); font-size: 18px; }
+.feature { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(22px, 4vw, 56px); align-items: center; padding-block: clamp(26px, 4vw, 44px); border-top: 1px solid var(--line); }
+.feature:last-child { border-bottom: 1px solid var(--line); }
+.feature .txt { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.feature .txt p { color: var(--muted); }
+.feature ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.feature li { padding-left: 26px; position: relative; }
+.feature li::before { content: ""; position: absolute; left: 0; top: .55em; width: 12px; height: 12px; border-radius: 50%; background: var(--red); }
+.feature .kicker { font-family: var(--f-display); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--red); }
+.media { min-width: 0; }
+.strip { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+.strip img { width: 46%; min-width: 190px; aspect-ratio: 4/5; object-fit: cover; border-radius: 16px; scroll-snap-align: start; flex: none; }
+.media img.one, .media video { width: 100%; border-radius: 18px; display: block; background: var(--soft); }
+.vid-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.vid-pair video { aspect-ratio: 9/16; object-fit: cover; }
+.media .cap { font-size: 13px; color: var(--muted); margin-top: 8px; }
+.feature.flip .media { order: -1; }
+
+/* як це працює */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: s; }
+.step { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 26px; display: flex; flex-direction: column; gap: 10px; }
+.step .n { font-family: var(--f-display); font-weight: 800; font-size: 40px; color: var(--red); line-height: 1; }
+.step p { color: var(--muted); }
+
+/* відгуки */
+.reviews { background: var(--soft); }
+.quotes { columns: 3 260px; column-gap: 18px; }
+.q { break-inside: avoid; background: var(--card); border-radius: 18px; padding: 20px 22px; margin-bottom: 18px; border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+.q p { font-size: 17px; }
+.q .who { font-size: 14px; color: var(--muted); font-weight: 700; }
+.q.big p { font-family: var(--f-hand); font-style: italic; font-size: 24px; line-height: 1.3; }
+
+/* безкоштовне */
+.freegrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.fr { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.fr b { font-size: 17px; }
+.fr span { font-size: 14px; color: var(--muted); }
+
+/* тарифи */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.plan { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 26px; display: flex; flex-direction: column; gap: 14px; }
+.plan.hot { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.plan.hot .muted, .plan.hot li { color: color-mix(in srgb, var(--paper) 78%, transparent); }
+.plan .price { font-family: var(--f-display); font-weight: 800; font-size: 40px; line-height: 1; font-variant-numeric: tabular-nums; }
+.plan .price small { font-family: var(--f-body); font-size: 15px; font-weight: 500; margin-left: 4px; }
+.plan .muted { color: var(--muted); font-size: 15px; }
+.plan ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+.plan .btn { margin-top: auto; justify-content: center; }
+.plan.hot .btn-red { box-shadow: none; }
+.badge { align-self: flex-start; background: var(--red); color: var(--on-red); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; border-radius: 8px; padding: 4px 9px; }
+.more-plans { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.mini { border: 1px dashed var(--line); border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; }
+.mini b { font-family: var(--f-display); font-size: 22px; font-variant-numeric: tabular-nums; }
+.gift { margin-top: 26px; background: var(--red); color: var(--on-red); border-radius: var(--r); padding: 22px 26px; display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; justify-content: space-between; }
+.gift p { font-size: 18px; max-width: 46rem; }
+.gift .btn { background: var(--on-red); color: var(--red); }
+
+/* faq */
+.faq { display: grid; gap: 10px; max-width: 52rem; }
+details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 22px; }
+summary { cursor: pointer; font-weight: 700; font-size: 18px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-family: var(--f-display); color: var(--red); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { margin-top: 10px; color: var(--muted); }
+
+/* фінал */
+.final { text-align: left; }
+.final-box { background: var(--ink); color: var(--paper); border-radius: 28px; padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 28px; align-items: center; }
+.final-box h2 .hand { color: var(--red); }
+.final-box p { color: color-mix(in srgb, var(--paper) 75%, transparent); margin-top: 14px; font-size: 18px; }
+.final-box .cta-row { justify-content: flex-start; }
+.final-box .btn-ghost { color: var(--paper); border-color: var(--paper); }
+.contact { font-size: 15px; margin-top: 10px; color: color-mix(in srgb, var(--paper) 70%, transparent); }
+.contact a { color: var(--paper); font-weight: 700; }
+footer { padding-block: 28px 40px; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 860px) {
+  .hero-grid, .feature, .final-box { grid-template-columns: 1fr; }
+  .feature.flip .media { order: 0; }
+  .steps, .plans, .more-plans { grid-template-columns: 1fr; }
+  .bubble.b1 { left: 10px; top: 10px; }
+  .bubble.b2 { right: 10px; bottom: 10px; }
+  .hero-pic { max-width: 460px; }
+}
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+</style>
+</head>
+<body>
+
+
+<div class="topbar"><div class="wrap">До 1 листопада <b>курс «Контент-2026» у подарунок</b> до будь-якого тарифу</div></div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <span class="eyebrow">Telegram-бот Тетяни Тафійчук</span>
+      <h1>Контент на тиждень за вечір <span class="hand">без дизайнера і монтажера</span></h1>
+      <p class="lead">Пишете свою нішу, а AI-агенти дають теми, пишуть каруселі під ключ, роблять слайди у вашому дизайні, монтують відео і знімають ролик з одного фото. Усе в одному боті, прямо з телефона.</p>
+      <div class="cta-row">
+        <a class="btn btn-red" href="https://t.me/content_tatiana_bot?start=agents" target="_blank" rel="noopener">
+          <svg class="tg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.6 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.9 13.5l-4.9-1.5c-1.1-.3-1.1-1.1.2-1.6L20.4 3c.9-.3 1.7.2 1.5 1.3z"/></svg>
+          Почати тестувати
+        </a>
+        <a class="btn btn-ghost" href="#plans">Тарифи</a>
+      </div>
+      <p class="small">Перша карусель безкоштовно. Карта не потрібна</p>
+    </div>
+    <div class="hero-pic">
+      <img class="me" src="hero.jpg" alt="Тетяна Тафійчук, маркетолог-стратег">
+      <div class="bubble b1"><span class="tag">ви</span><b>Ніша: косметолог</b>хочу контент на тиждень</div>
+      <div class="bubble b2"><span class="tag">бот</span><b>7 тем і 3 каруселі готові</b>обирайте дизайн 👇</div>
+    </div>
+  </div>
+</header>
+
+<section id="what">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Що вміє бот</span>
+      <h2>Справжні роботи бота, <span class="hand">не макети</span></h2>
+      <p>Усі приклади нижче зроблені в боті з одного мого фото</p>
+    </div>
+
+    <div class="feature">
+      <div class="txt">
+        <span class="kicker">Каруселі під ключ</span>
+        <h3>Агент сам придумує тему, пише живий текст і робить слайди</h3>
+        <p>Пишете нішу, отримуєте теми, які зберігають, і готову карусель вашою мовою. 20+ дизайнів, ваші фото, ваш колір.</p>
+        <ul>
+          <li>теми під вашу нішу, вірусні заголовки</li>
+          <li>текст звучить як ви, а не як робот</li>
+          <li>редактор: змінити слово, фото чи колір словами</li>
+        </ul>
+      </div>
+      <div class="media">
+        <div class="strip" aria-label="Приклади каруселей">
+          <img src="c6.jpg" alt="Карусель у дизайні «Темний червоний»" loading="lazy">
+          <img src="c21.jpg" alt="Карусель у дизайні «Скрапбук»" loading="lazy">
+          <img src="c2.jpg" alt="Карусель у дизайні «Сторіс-маркетолог»" loading="lazy">
+          <img src="c3.jpg" alt="Карусель у дизайні «Editorial»" loading="lazy">
+        </div>
+        <p class="cap">Одна обкладинка в 4 дизайнах. Гортайте вбік</p>
+      </div>
+    </div>
+
+    <div class="feature flip">
+      <div class="txt">
+        <span class="kicker">Відео з одного фото</span>
+        <h3>Розкадровка в ChatGPT, кіношний ролик у Gemini</h3>
+        <p>Бот дає промти для 4 форматів: кіно з вашого фото, реклама товару, зум з космосу до вашого салону і зміна образу свайпом, навіть з вашим одягом. Обличчя лишається вашим у кожному кадрі.</p>
+        <ul>
+          <li>промти безкоштовно на слово РОЗКАДРОВКА</li>
+          <li>на підписці бот сам робить розкадровку з вашого фото</li>
+        </ul>
+      </div>
+      <div class="media">
+        <div class="vid-pair">
+          <video src="kino.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Кіно з одного фото"></video>
+          <video src="swipe.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Зміна образу свайпом"></video>
+        </div>
+        <p class="cap">Зліва кіно з фото, справа зміна образу. Обидва з одного фото</p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="txt">
+        <span class="kicker">Монтаж відео</span>
+        <h3>Надсилаєте сире відео, отримуєте готовий рілс</h3>
+        <p>Бот вирізає паузи, робить субтитри, колір і звук. А «Ефекти Claude» ставлять картки, цифри і прожектор саме на ваші слова, як у трендових роликах.</p>
+        <ul>
+          <li>стилі монтажу, які можна запам'ятати як свій</li>
+          <li>вставки з фотостоку і заголовки на екрані</li>
+        </ul>
+      </div>
+      <div class="media">
+        <video src="fx.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Ефекти Claude на відео" style="max-width:340px;margin-inline:auto;aspect-ratio:9/16;object-fit:cover"></video>
+        <p class="cap" style="text-align:center">Картки з тезами вилітають на словах</p>
+      </div>
+    </div>
+
+    <div class="feature flip">
+      <div class="txt">
+        <span class="kicker">Ще в боті</span>
+        <h3>Контент-план, фото з AI і аналіз вашого Instagram</h3>
+        <ul>
+          <li>аналіз профілю Instagram за скрінами</li>
+          <li>щопонеділка розбір Instagram і план на тиждень</li>
+          <li>фото з AI з вашим обличчям і каталог образів</li>
+          <li>3-7 вірусних тем щотижня</li>
+          <li>каруселі зі статті за посиланням</li>
+        </ul>
+      </div>
+      <div class="media">
+        <img class="one" src="kadr.jpg" alt="Приклад: одне фото і кадри з відео" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Як почати</span>
+      <h2>3 кроки, <span class="hand">2 хвилини</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><h3>Відкрийте бота</h3><p>Кнопка нижче веде в Telegram. Натисніть «Старт»</p></div>
+      <div class="step"><span class="n">2</span><h3>Напишіть нішу</h3><p>Хто ви, кому допомагаєте, що продаєте. Можна голосом</p></div>
+      <div class="step"><span class="n">3</span><h3>Заберіть карусель</h3><p>Оберіть тему і дизайн, і перша карусель готова. Безкоштовно</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Відгуки</span>
+      <h2>Що кажуть ті, <span class="hand">хто вже спробував</span></h2>
+    </div>
+    <div class="quotes">
+      <div class="q big"><p>Так швидко і просто вперше 🔥🔥🔥 Дякую!</p><span class="who">olena_holovnia</span></div>
+      <div class="q"><p>Мені подобається зараз робити каруселі в Агент бот, зручно все в одному місці 🔥</p><span class="who">coral_wellness_tetiana</span></div>
+      <div class="q"><p>Дуже зручно, особливо коли треба швидко і немає можливості писати. А так надиктував і вуаля, готово</p><span class="who">olesiauviaz</span></div>
+      <div class="q"><p>Бот дає можливість швидко зробити візуал і текст для постів. Супер 🔥</p><span class="who">nataliia_abissonova</span></div>
+      <div class="q big"><p>Тетяна, карусель створила дуже швидко</p><span class="who">Nataliya Deshko</span></div>
+      <div class="q"><p>Дякую, я спробувала, прикольна штука 😍</p><span class="who">shine__bright__bayb</span></div>
+      <div class="q"><p>Дякую, крутий Агент ❤️🙌</p><span class="who">dietolog_odessa</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="free" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Без карти і без підписки</span>
+      <h2>Що в боті <span class="hand">у вільному доступі</span></h2>
+    </div>
+    <div class="freegrid">
+      <div class="fr"><b>3 каруселі під ключ</b><span>агент дає тему, пише текст і робить слайди</span></div>
+      <div class="fr"><b>7 каруселей з вашого тексту</b><span>у 20+ дизайнах з вашим фото</span></div>
+      <div class="fr"><b>Теми під вашу нішу</b><span>2 видачі по 7 тем</span></div>
+      <div class="fr"><b>Фото з AI</b><span>по 1 на день перші 3 дні</span></div>
+      <div class="fr"><b>Монтаж відео</b><span>по 1 відео на день 3 дні: паузи, субтитри, звук</span></div>
+      <div class="fr"><b>Промти для відео з фото</b><span>розкадровка, 4 формати</span></div>
+      <div class="fr"><b>Секретні команди для фото</b><span>фешн-кадри з одного фото</span></div>
+      <div class="fr"><b>Аналіз профілю Instagram</b><span>за скрінами: що залетіло і чому, що змінити в шапці, про що писати далі</span></div>
+      <div class="fr"><b>Тест рівня блогу</b><span>і поради, що робити далі</span></div>
+      <div class="fr"><b>Міні-курс «25 ідей»</b><span>і безкоштовний урок</span></div>
+      <div class="fr"><b>За подругу</b><span>+2 видачі тем і +2 каруселі</span></div>
+      <div class="fr"><b>Живий ефір</b><span>щовівторка о 15:00 у моєму каналі</span></div>
+    </div>
+    <div class="cta-row" style="margin-top:22px">
+      <a class="btn btn-red" href="https://t.me/content_tatiana_bot?start=free" target="_blank" rel="noopener">Почати тестувати</a>
+    </div>
+  </div>
+</section>
+
+<section id="plans">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Тарифи</span>
+      <h2>Оберіть, скільки контенту <span class="hand">віддати агентам</span></h2>
+      <p>Оплата щомісяця, автопродовження можна вимкнути будь-коли</p>
+    </div>
+    <div class="plans">
+      <div class="plan hot">
+        <span class="badge">Найчастіше беруть</span>
+        <h3>Каруселі під ключ</h3>
+        <div class="price">399<small>грн/міс</small></div>
+        <p class="muted">Агент пише тему і текст і робить слайди у вашому дизайні</p>
+        <ul>
+          <li>20 каруселей під ключ на місяць</li>
+          <li>візуал з вашого тексту без обмежень</li>
+          <li>15 оживлених слайдів, 10 фото з AI, 4 відео</li>
+          <li>аналіз Instagram і план щотижня</li>
+        </ul>
+        <a class="btn btn-red" href="https://t.me/content_tatiana_bot?start=tarify" target="_blank" rel="noopener">Оформити в боті</a>
+      </div>
+      <div class="plan">
+        <h3>Каруселі + відео</h3>
+        <div class="price">699<small>грн/міс</small></div>
+        <p class="muted">Усе з «Каруселей під ключ», плюс монтаж відео</p>
+        <ul>
+          <li>31 відео до 3 хвилин</li>
+          <li>120 оживлених слайдів</li>
+          <li>7 вірусних тем на тиждень</li>
+          <li>ефекти Claude і стилі монтажу</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://t.me/content_tatiana_bot?start=tarify" target="_blank" rel="noopener">Оформити в боті</a>
+      </div>
+      <div class="plan">
+        <h3>PRO</h3>
+        <div class="price">899<small>грн/міс</small></div>
+        <p class="muted">Для тих, хто веде кілька соцмереж або постить щодня</p>
+        <ul>
+          <li>70 каруселей під ключ замість 20</li>
+          <li>контент-план на тиждень з текстами</li>
+          <li>PRO + відео: 999 грн</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://t.me/content_tatiana_bot?start=tarify" target="_blank" rel="noopener">Оформити в боті</a>
+      </div>
+    </div>
+    <div class="more-plans">
+      <div class="mini"><span class="small">Тільки візуал з вашого тексту</span><b>199 грн/міс</b><span class="small">Агент текст не пише: ваш текст стає слайдами</span></div>
+      <div class="mini"><span class="small">Тільки відео</span><b>299 грн/міс</b><span class="small">25 відео: паузи, субтитри, звук, стилі</span></div>
+      <div class="mini"><span class="small">Каруселі під ключ на 3 місяці</span><b>1113 грн</b><span class="small">Однією оплатою, без автосписань</span></div>
+    </div>
+    <div class="gift">
+      <p><b>До 1 листопада</b> до будь-якого тарифу курс «Контент-2026» у подарунок: 35 уроків з готовою системою просування. Ціна 399 фіксується для вас, з 1.11 для нових 499</p>
+      <a class="btn" href="https://t.me/content_tatiana_bot?start=tarify" target="_blank" rel="noopener">Забрати курс</a>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Питання</span><h2>Часті питання</h2></div>
+    <div class="faq">
+      <details><summary>Потрібен комп'ютер?</summary><p>Ні. Усе працює в Telegram з телефона: пишете або надиктовуєте голосом, бот відповідає готовим контентом.</p></details>
+      <details><summary>Тексти не будуть звучати як ChatGPT?</summary><p>Агенти написані за моєю методикою живої мови: на «ви», без канцеляризмів і штампів. Бот запам'ятовує вашу нішу і стиль, а будь-яку фразу можна змінити словами.</p></details>
+      <details><summary>Чи можна спершу спробувати?</summary><p>Так. Перша карусель і промти для розкадровки безкоштовні, карта не потрібна.</p></details>
+      <details><summary>Як скасувати підписку?</summary><p>Автопродовження вимикається в боті, у розділі з вашою підпискою. Оплачений місяць лишається до кінця.</p></details>
+      <details><summary>Мені потрібна допомога з контентом особисто</summary><p>Напишіть мені в Telegram @Tatian_light. Є супровід 1,5-2 місяці, де ми разом будуємо стратегію і запуск.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" style="padding-top:0">
+  <div class="wrap">
+    <div class="final-box">
+      <div>
+        <h2>Перша карусель <span class="hand">за 2 хвилини</span></h2>
+        <p>Відкрийте бота, напишіть нішу і подивіться, як агенти працюють на вас.</p>
+        <p class="contact">Питання: <a href="https://t.me/Tatian_light" target="_blank" rel="noopener">@Tatian_light</a></p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-red" href="https://t.me/content_tatiana_bot?start=agents" target="_blank" rel="noopener">
+          <svg class="tg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.6 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.9 13.5l-4.9-1.5c-1.1-.3-1.1-1.1.2-1.6L20.4 3c.9-.3 1.7.2 1.5 1.3z"/></svg>
+          Відкрити бота
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">© Тетяна Тафійчук · @content_tatiana_bot</div></footer>
+
+</body>
+</html>
