@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Threads-агент: як почати</title>
+<meta name="description" content="Покрокова інструкція: як підключити й налаштувати Threads-агента Тетяни Тафійчук за 5 хвилин">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Onest:wght@400;500;700&display=swap">
+<style>
+html,body{margin:0}img{max-width:100%}*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+
+/* Layout: одна вузька колонка «як у телефоні», кроки нитками, як дописи в Threads */
+:root{
+  --bg:#F7F3F1; --card:#FFFFFF; --ink:#161214; --soft:#6F6367; --line:#E2D8D5;
+  --accent:#D81F3C; --accent-ink:#FFFFFF; --warn:#EEE5E2;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Onest","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#131012; --card:#1B1618; --ink:#F5EFEE; --soft:#B4A7AB; --line:#342B2E;
+  --accent:#FF4762; --accent-ink:#FFFFFF; --warn:#1F1A1C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#131012; --card:#1B1618; --ink:#F5EFEE; --soft:#B4A7AB; --line:#342B2E;
+  --accent:#FF4762; --accent-ink:#FFFFFF; --warn:#1F1A1C; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:640px;margin:0 auto;padding-block:32px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  display:flex;flex-direction:column;gap:28px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);font-weight:700}
+.badge b{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--bg);font-family:var(--display);font-size:15px;letter-spacing:0}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,7vw,42px);line-height:1.12;margin:10px 0 12px;text-wrap:balance}
+.lead{color:var(--soft);margin:0;max-width:60ch}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;position:relative;padding-bottom:22px}
+.step:not(:last-child)::before{content:"";position:absolute;left:21px;top:46px;bottom:4px;width:2px;background:var(--line);border-radius:2px}
+.num{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:16px}
+.step h2{font-family:var(--display);font-weight:600;font-size:18px;line-height:1.3;margin:9px 0 6px;text-wrap:balance}
+.step p{margin:0 0 8px}
+.step ul{margin:4px 0 8px;padding-left:20px}
+.step li{margin:3px 0}
+.path{font-weight:700}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.92em;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.note{background:var(--warn);border-radius:12px;padding:10px 14px;font-size:15.5px;margin-top:6px}
+.example{border-left:3px solid var(--accent);padding:2px 0 2px 12px;color:var(--soft);font-style:italic;margin:6px 0}
+.cta{display:flex;flex-direction:column;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+.cta h3{font-family:var(--display);font-size:18px;margin:0}
+.btn{display:inline-block;text-align:center;background:var(--accent);color:var(--accent-ink);font-weight:700;text-decoration:none;border-radius:999px;padding:14px 22px}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.word{font-family:var(--display);font-weight:800;letter-spacing:.04em}
+.help{display:flex;flex-direction:column;gap:6px}
+.help h3{font-family:var(--display);font-size:18px;margin:0 0 4px}
+.help ul{margin:0;padding-left:20px}
+.help li{margin:6px 0}
+footer{color:var(--soft);font-size:14px}
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <span class="badge"><b>@</b> Threads-агент · AI-агенти для контенту</span>
+    <h1>Ваш Threads веде себе сам</h1>
+    <p class="lead">Агент щодня пише дописи вашою мовою і сам публікує їх у Threads тоді, коли вас найкраще бачать. Налаштування займає близько 5 хвилин, ось усі кроки по черзі.</p>
+  </header>
+
+  <ol class="steps">
+    <li class="step"><span class="num">1</span><div>
+      <h2>Зайдіть в агента</h2>
+      <p>Напишіть агенту кодове слово <span class="word">ТРЕДС</span> або відкрийте посилання нижче і натисніть «🚀 Підключити Threads».</p>
+      <p>Хочете спершу подивитись, як пише агент? Натисніть «👀 Як виглядають дописи».</p>
+    </div></li>
+
+    <li class="step"><span class="num">2</span><div>
+      <h2>Відкрийте браузер в інкогніто</h2>
+      <ul>
+        <li><span class="path">Android:</span> Chrome → ⋮ вгорі справа → «Нова вкладка в режимі анонімного перегляду»</li>
+        <li><span class="path">iPhone:</span> Safari → значок вкладок (два квадратики) → «Приватний» → «+»</li>
+      </ul>
+      <p>Відкрийте там <code>threads.net</code> і увійдіть у свій Threads.</p>
+      <p class="note">❗ Саме в інкогніто і саме в браузері, а не з додатку Threads, Instagram чи Telegram. Інакше телефон перекине вас у додаток, і підключення зірветься.</p>
+    </div></li>
+
+    <li class="step"><span class="num">3</span><div>
+      <h2>Зареєструйтеся в Zernio</h2>
+      <p>У цій самій вкладці відкрийте <code>zernio.com</code> і зареєструйтеся через Google. Якщо з'явиться майстер для розробників, натисніть «Пропустити поки що» (Skip for now).</p>
+    </div></li>
+
+    <li class="step"><span class="num">4</span><div>
+      <h2>Підключіть Threads</h2>
+      <p><span class="path">Меню ☰ → Connections → New Connection → Threads</span> → «Дозволити».</p>
+    </div></li>
+
+    <li class="step"><span class="num">5</span><div>
+      <h2>Скопіюйте ключ</h2>
+      <p><span class="path">Меню ☰ → API Keys → Create key.</span> Скопіюйте ключ, він починається з <code>sk_</code>.</p>
+      <p class="note">🔒 Ключ нікому не пересилайте, він тільки для агента.</p>
+    </div></li>
+
+    <li class="step"><span class="num">6</span><div>
+      <h2>Вставте ключ в агента</h2>
+      <p>Надішліть ключ агенту одним повідомленням. Агент перевірить його і одразу прибере з чату.</p>
+    </div></li>
+
+    <li class="step"><span class="num">7</span><div>
+      <h2>Розкажіть про себе</h2>
+      <p>Агент поставить два питання, відповідати можна текстом або голосовим:</p>
+      <ul>
+        <li>про що ваш блог і для кого;</li>
+        <li>що ви продаєте і куди вести людей.</li>
+      </ul>
+      <p class="example">«Я косметолог у Львові, пишу для жінок 30+, які бояться процедур і хочуть доглянуту шкіру без болю»</p>
+      <p class="example">«Консультація, пишіть у дірект» або «курс, кодове слово ДОГЛЯД»</p>
+    </div></li>
+
+    <li class="step"><span class="num">8</span><div>
+      <h2>Налаштуйте «✍️ Мою мову»</h2>
+      <p>Опишіть, як ви говорите з людьми, або надішліть 3-10 своїх постів. Агент вивчить ваш стиль і писатиме саме так, як говорите ви.</p>
+    </div></li>
+
+    <li class="step"><span class="num">9</span><div>
+      <h2>Погляньте на перші дописи</h2>
+      <p>Щодня агент пише 3 дописи: про життя, про вашу нішу і пораду, яку хочеться зберегти. Перші 3 виходять тільки після вашого «✅».</p>
+      <p>Далі можна увімкнути «🤖 Публікувати без мене». Ви все одно бачите кожен допис і можете замінити його («🔁 Інший») чи пропустити.</p>
+    </div></li>
+
+    <li class="step"><span class="num">10</span><div>
+      <h2>Агент росте разом з вами</h2>
+      <p>Щопонеділка агент дивиться вашу статистику, бачить, що залетіло, і пише нові дописи за формулою того, що вже спрацювало. Меню агента завжди під рукою: команда <code>/treds</code>.</p>
+    </div></li>
+  </ol>
+
+  <section class="cta">
+    <h3>Почати зараз</h3>
+    <p style="margin:0">Відкрийте агента в Telegram і натисніть «🚀 Підключити Threads».</p>
+    <a class="btn" href="https://t.me/content_tatiana_bot?start=treds" target="_blank" rel="noopener">🧵 Відкрити Threads-агента</a>
+  </section>
+
+  <section class="help">
+    <h3>😕 Не виходить підключити?</h3>
+    <ul>
+      <li>Робіть усе в одній вкладці інкогніто: спершу <code>threads.net</code>, потім у тій самій вкладці <code>zernio.com</code>.</li>
+      <li>Не відкривайте Zernio з Telegram, Instagram чи Threads. Скопіюйте адресу <code>zernio.com</code> і вставте в браузер вручну.</li>
+      <li>Телефон перекидає в додаток? Налаштування телефону → Додатки → Threads (і Instagram) → «Відкривати за замовчуванням» → вимкніть «Відкривати підтримувані посилання». Після підключення можна ввімкнути назад.</li>
+      <li>Або підключіть з комп'ютера чи iPad, а ключ потім просто вставте в агента.</li>
+    </ul>
+  </section>
+
+  <footer>Тетяна Тафійчук · @online_school_tatiana</footer>
+</div>
+
+</body>
+</html>
