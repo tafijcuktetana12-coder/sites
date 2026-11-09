@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Інтенсив з комерційної нерухомості</title>
+<meta name="description" content="Інтенсив для ріелторів: перехід від житлової до комерційної нерухомості, пошук об'єктів, план на 30 днів і кваліфікація клієнта. Три живі заняття в Zoom.">
+<meta property="og:title" content="Інтенсив з комерційної нерухомості для ріелторів">
+<meta property="og:description" content="Три живі заняття в Zoom: перші кроки і система роботи в комерційній нерухомості. 500 грн за три дні.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d1b3e; --muted:#4a5878; --blue:#1d4ed8; --blue2:#3b82f6; --sky:#e8f0ff;
+  --coral:#ff4d6d; --mint:#10b981; --white:#ffffff; --line:#d7e2fb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--ink);font:16px/1.6 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+
+/* Липка панель ЗВЕРХУ: внизу її закривав би значок Netlify */
+.bar{position:sticky;top:0;z-index:50;background:rgba(13,27,62,.96);backdrop-filter:blur(8px);color:#fff;padding-top:env(safe-area-inset-top)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}
+.bar b{font-family:Unbounded,sans-serif;font-weight:600;font-size:14px;letter-spacing:.2px}
+.bar span{display:block;font-size:12px;opacity:.8}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:800;border-radius:999px;padding:14px 26px;font-size:16px;transition:transform .15s ease,box-shadow .15s ease;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}
+.btn-coral{background:var(--coral);color:#fff;box-shadow:0 8px 24px rgba(255,77,109,.35)}
+.btn-blue{background:var(--blue);color:#fff;box-shadow:0 8px 24px rgba(29,78,216,.3)}
+.btn-ghost{background:#fff;color:var(--blue);border:2px solid var(--line)}
+.bar .btn{padding:10px 18px;font-size:14px}
+
+/* Hero */
+.hero{background:linear-gradient(160deg,#eaf1ff 0%,#ffffff 55%,#fff0f3 100%);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:64px 40px}
+.tag{display:inline-block;background:var(--ink);color:#fff;font-weight:800;font-size:12px;letter-spacing:1px;text-transform:uppercase;border-radius:999px;padding:7px 14px}
+h1{font-family:Unbounded,sans-serif;font-weight:800;font-size:clamp(30px,5vw,52px);line-height:1.08;margin:18px 0 16px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--blue)}
+.lead{font-size:18px;color:var(--muted);max-width:34em;margin:0 0 26px}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 28px;padding:0;list-style:none}
+.facts li{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-weight:700;font-size:14px}
+.facts li i{font-style:normal;color:var(--coral)}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.city{width:100%;height:auto;max-width:480px;justify-self:center;filter:drop-shadow(0 20px 40px rgba(29,78,216,.18))}
+
+section{padding-block:64px}
+h2{font-family:Unbounded,sans-serif;font-weight:800;font-size:clamp(24px,3.6vw,36px);line-height:1.15;margin:0 0 12px;text-wrap:balance}
+.sub{color:var(--muted);margin:0 0 32px;max-width:40em}
+
+/* Для кого */
+.who{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.who div{border-radius:20px;padding:24px;color:#fff;min-width:0}
+.who div:nth-child(1){background:linear-gradient(135deg,#1d4ed8,#3b82f6)}
+.who div:nth-child(2){background:linear-gradient(135deg,#ff4d6d,#ff7a59)}
+.who div:nth-child(3){background:linear-gradient(135deg,#0d1b3e,#334a84)}
+.who b{display:block;font-family:Unbounded,sans-serif;font-size:17px;margin-bottom:8px}
+
+/* Програма */
+.days{display:grid;gap:16px}
+.day{display:grid;grid-template-columns:96px 1fr;gap:20px;align-items:start;background:var(--sky);border-radius:22px;padding:24px}
+.day .n{font-family:Unbounded,sans-serif;font-weight:800;font-size:40px;line-height:1;color:var(--blue)}
+.day .n small{display:block;font-size:12px;letter-spacing:1px;color:var(--muted);font-family:Manrope,sans-serif;font-weight:800;margin-top:6px}
+.day h3{margin:0 0 6px;font-size:20px}
+.day p{margin:0;color:var(--muted)}
+.day .pr{display:inline-block;margin-top:12px;background:#fff;border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px}
+.day .pr i{font-style:normal;color:var(--coral)}
+
+/* Результат */
+.get{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{border:2px solid var(--line);border-radius:22px;padding:24px;background:#fff;min-width:0}
+.card svg{width:44px;height:44px;margin-bottom:12px}
+.card h3{margin:0 0 6px;font-size:18px}
+.card p{margin:0;color:var(--muted)}
+
+/* Як проходить */
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;background:#fff;border-radius:20px;padding:22px;border:1px solid var(--line);min-width:0}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;margin-bottom:10px}
+.dark{background:var(--ink);color:#fff}
+.dark .sub{color:#b9c6e6}
+.dark .steps li{background:#16285a;border-color:#24397a}
+
+/* Ціна */
+.price{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;background:linear-gradient(135deg,#1d4ed8,#4f7cff);color:#fff;border-radius:28px;padding:36px}
+.price .sum{font-family:Unbounded,sans-serif;font-weight:800;font-size:clamp(40px,7vw,64px);line-height:1}
+.price p{margin:8px 0 0;opacity:.9}
+
+/* Тест */
+.quiz{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;border:2px dashed var(--coral);border-radius:24px;padding:26px;background:#fff6f8}
+.quiz .q{font-size:40px}
+.quiz h3{margin:0 0 4px;font-size:20px}
+.quiz p{margin:0;color:var(--muted)}
+
+/* FAQ */
+details{border-bottom:1px solid var(--line);padding:18px 0}
+summary{cursor:pointer;font-weight:800;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";color:var(--blue);font-size:22px;line-height:1}
+details[open] summary::after{content:"−"}
+details p{margin:10px 0 0;color:var(--muted)}
+
+footer{background:var(--ink);color:#b9c6e6;padding-block:40px 120px;font-size:14px}
+footer a{color:#fff}
+
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;padding-block:36px 24px}
+  .city{max-width:340px;order:-1}
+  .who,.get{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .price,.quiz{grid-template-columns:1fr}
+  .quiz .q{display:none}
+}
+@media (max-width:480px){
+  .steps{grid-template-columns:1fr}
+  .day{grid-template-columns:1fr;gap:8px}
+  .bar span{display:none}
+  .btn{width:100%}
+  .bar .btn{width:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="wrap">
+    <div><b>Інтенсив · 3 дні · 500 грн</b><span>Комерційна нерухомість для ріелторів</span></div>
+    <a class="btn btn-coral" href="https://t.me/Realtor_education_bot?start=int">Хочу на інтенсив</a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="tag">Інтенсив для ріелторів</span>
+      <h1>Комерційна нерухомість: <em>перші кроки і система роботи</em></h1>
+      <p class="lead">Три живі заняття в Zoom, по одному щодня. Розберемо, що змінюється при переході від житлової до комерційної, де шукати об'єкти і власників і як відрізнити клієнта, з яким варто працювати.</p>
+      <ul class="facts">
+        <li><i>3</i> живі заняття в Zoom</li>
+        <li><i>3</i> практичні завдання</li>
+        <li>Записи занять</li>
+        <li><i>500 грн</i> за всі три дні</li>
+      </ul>
+      <div class="cta">
+        <a class="btn btn-coral" href="https://t.me/Realtor_education_bot?start=int">Дізнатися деталі і записатися</a>
+        <a class="btn btn-ghost" href="#program">Програма</a>
+      </div>
+    </div>
+    <svg class="city" viewBox="0 0 480 420" role="img" aria-label="Ілюстрація: бізнес-центр і торгові приміщення">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient>
+        <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7a59"/><stop offset="1" stop-color="#ff4d6d"/></linearGradient>
+        <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#334a84"/><stop offset="1" stop-color="#0d1b3e"/></linearGradient>
+      </defs>
+      <circle cx="360" cy="90" r="54" fill="#ffd6de"/>
+      <rect x="40" y="150" width="110" height="250" rx="10" fill="url(#g3)"/>
+      <rect x="165" y="60" width="140" height="340" rx="12" fill="url(#g1)"/>
+      <rect x="320" y="190" width="120" height="210" rx="10" fill="url(#g2)"/>
+      <g fill="#cfe0ff" opacity=".9">
+        <rect x="185" y="85" width="24" height="18" rx="3"/><rect x="223" y="85" width="24" height="18" rx="3"/><rect x="261" y="85" width="24" height="18" rx="3"/>
+        <rect x="185" y="120" width="24" height="18" rx="3"/><rect x="223" y="120" width="24" height="18" rx="3"/><rect x="261" y="120" width="24" height="18" rx="3"/>
+        <rect x="185" y="155" width="24" height="18" rx="3"/><rect x="223" y="155" width="24" height="18" rx="3"/><rect x="261" y="155" width="24" height="18" rx="3"/>
+        <rect x="185" y="190" width="24" height="18" rx="3"/><rect x="223" y="190" width="24" height="18" rx="3"/><rect x="261" y="190" width="24" height="18" rx="3"/>
+        <rect x="185" y="225" width="24" height="18" rx="3"/><rect x="223" y="225" width="24" height="18" rx="3"/><rect x="261" y="225" width="24" height="18" rx="3"/>
+        <rect x="185" y="260" width="24" height="18" rx="3"/><rect x="223" y="260" width="24" height="18" rx="3"/><rect x="261" y="260" width="24" height="18" rx="3"/>
+      </g>
+      <g fill="#8fb0ff" opacity=".8">
+        <rect x="58" y="175" width="30" height="16" rx="3"/><rect x="102" y="175" width="30" height="16" rx="3"/>
+        <rect x="58" y="205" width="30" height="16" rx="3"/><rect x="102" y="205" width="30" height="16" rx="3"/>
+        <rect x="58" y="235" width="30" height="16" rx="3"/><rect x="102" y="235" width="30" height="16" rx="3"/>
+        <rect x="58" y="265" width="30" height="16" rx="3"/><rect x="102" y="265" width="30" height="16" rx="3"/>
+      </g>
+      <rect x="335" y="300" width="90" height="70" rx="6" fill="#fff" opacity=".95"/>
+      <rect x="335" y="285" width="90" height="16" rx="4" fill="#0d1b3e"/>
+      <rect x="350" y="230" width="60" height="34" rx="6" fill="#fff"/>
+      <text x="380" y="252" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="13" fill="#ff4d6d">ОРЕНДА</text>
+      <rect x="200" y="330" width="70" height="70" rx="6" fill="#0d1b3e" opacity=".85"/>
+      <rect x="20" y="398" width="440" height="6" rx="3" fill="#0d1b3e" opacity=".15"/>
+      <g transform="translate(70 40)">
+        <rect width="110" height="44" rx="22" fill="#fff" stroke="#d7e2fb"/>
+        <text x="55" y="28" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="15" fill="#1d4ed8">+ ексклюзив</text>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Для кого інтенсив</h2>
+    <p class="sub">Якщо ви дивитесь у бік комерційної нерухомості і хочете зрозуміти, з чого почати, ці три дні для вас.</p>
+    <div class="who">
+      <div><b>Працюєте з житловою</b>Думаєте про перехід у комерційну і хочете зрозуміти, що там інакше.</div>
+      <div><b>Вже пробуєте комерційну</b>Хочете системи: де брати об'єкти, як говорити з власником, кого брати в роботу.</div>
+      <div><b>Тільки починаєте</b>Хочете одразу стартувати з правильних кроків і мати план на перший місяць.</div>
+    </div>
+  </div>
+</section>
+
+<section id="program" style="padding-top:0">
+  <div class="wrap">
+    <h2>Програма по днях</h2>
+    <p class="sub">Кожен день закінчується практикою, тож після інтенсиву у вас на руках три готові робочі інструменти.</p>
+    <div class="days">
+      <div class="day"><div class="n">01<small>ДЕНЬ</small></div><div><h3>Від житлової до комерційної нерухомості</h3><p>Що змінюється при переході: інші клієнти, інші об'єкти, інша розмова з власником.</p><span class="pr"><i>Практика:</i> чернетка оголошення</span></div></div>
+      <div class="day"><div class="n">02<small>ДЕНЬ</small></div><div><h3>Пошук об'єктів і план на 30 днів</h3><p>Де шукати об'єкти і власників, щоб у вас з'явилась своя база.</p><span class="pr"><i>Практика:</i> план на 30 днів</span></div></div>
+      <div class="day"><div class="n">03<small>ДЕНЬ</small></div><div><h3>Холодний, теплий і гарячий клієнт</h3><p>Як розрізнити клієнтів і що робити з кожним далі, щоб не витрачати час на тих, хто не купить.</p><span class="pr"><i>Практика:</i> картка кваліфікації клієнта</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>З чим ви вийдете</h2>
+    <div class="get">
+      <div class="card"><svg viewBox="0 0 44 44"><rect x="6" y="4" width="32" height="36" rx="6" fill="#e8f0ff"/><rect x="12" y="12" width="20" height="4" rx="2" fill="#1d4ed8"/><rect x="12" y="20" width="16" height="4" rx="2" fill="#3b82f6"/><rect x="12" y="28" width="12" height="4" rx="2" fill="#ff4d6d"/></svg><h3>Чернетка оголошення</h3><p>Перше оголошення про комерційний об'єкт, яке можна доробити і використати.</p></div>
+      <div class="card"><svg viewBox="0 0 44 44"><rect x="4" y="8" width="36" height="32" rx="6" fill="#fff0f3"/><rect x="4" y="8" width="36" height="9" rx="4" fill="#ff4d6d"/><circle cx="14" cy="26" r="3" fill="#1d4ed8"/><circle cx="22" cy="26" r="3" fill="#1d4ed8"/><circle cx="30" cy="26" r="3" fill="#10b981"/><circle cx="14" cy="34" r="3" fill="#1d4ed8"/></svg><h3>План на 30 днів</h3><p>Конкретні кроки на перший місяць: де шукати об'єкти і власників.</p></div>
+      <div class="card"><svg viewBox="0 0 44 44"><rect x="4" y="6" width="36" height="32" rx="6" fill="#e9fbf4"/><circle cx="15" cy="18" r="5" fill="#10b981"/><rect x="24" y="14" width="12" height="3" rx="1.5" fill="#0d1b3e"/><rect x="24" y="20" width="9" height="3" rx="1.5" fill="#4a5878"/><rect x="10" y="28" width="26" height="4" rx="2" fill="#1d4ed8"/></svg><h3>Картка кваліфікації</h3><p>Питання, які допоможуть одразу зрозуміти, холодний перед вами клієнт, теплий чи гарячий.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap">
+    <h2>Як записатися</h2>
+    <p class="sub">Усе відбувається в Telegram-агенті: там програма, оплата і доступ.</p>
+    <ol class="steps">
+      <li>Натисніть кнопку «Хочу на інтенсив» і відкрийте агента в Telegram.</li>
+      <li>Підпишіться на канал @clubofrieltors, агент підкаже.</li>
+      <li>Подивіться картку інтенсиву і натисніть «Оплатити».</li>
+      <li>Після оплати агент сам відкриє доступ і надішле посилання в групу.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="price">
+      <div>
+        <div class="sum">500 грн</div>
+        <p>за всі три дні інтенсиву: три живі заняття в Zoom, практика і записи</p>
+      </div>
+      <a class="btn btn-coral" href="https://t.me/Realtor_education_bot?start=int">Записатися на інтенсив</a>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="quiz">
+      <div class="q">🧭</div>
+      <div><h3>Не впевнені, чи вам це потрібно?</h3><p>Пройдіть короткий тест «Де ви втрачаєте угоди та комісію?»: 7 ситуацій з практики, відповіді кнопками, наприкінці ваш результат.</p></div>
+      <a class="btn btn-blue" href="https://t.me/Realtor_education_bot?start=test">Пройти тест</a>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>Часті запитання</h2>
+    <details><summary>Чи будуть записи?</summary><p>Так, записи будуть. Строк доступу до них повідомимо перед оплатою.</p></details>
+    <details><summary>Як проходять заняття?</summary><p>Три живі заняття в Zoom, по одному щодня. Кожне закінчується практичним завданням.</p></details>
+    <details><summary>Як оплатити?</summary><p>Оплата в Telegram-агенті кнопкою «Оплатити». Після оплати агент сам відкриває доступ і надсилає посилання в групу інтенсиву.</p></details>
+    <details><summary>Залишились питання?</summary><p>Відкрийте агента і натисніть «Поставити питання». Відповідь прийде туди ж.</p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b style="color:#fff">Інтенсив з комерційної нерухомості для ріелторів</b></p>
+    <p>Telegram-агент: <a href="https://t.me/Realtor_education_bot?start=int">@Realtor_education_bot</a> · Канал: <a href="https://t.me/clubofrieltors">@clubofrieltors</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
